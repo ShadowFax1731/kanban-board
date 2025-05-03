@@ -28,7 +28,7 @@ function App() {
     const updatedTask = { ...task, status: newStatus };
 
     fetch(`https://kanban-api-s65u.onrender.com/api/v1/tasks/${taskId}`, {
-      method: "PUT", // or PATCH depending on your backend
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
