@@ -4,6 +4,19 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 const TaskGrid = ({ tasks, onStatusChange }) => {
   const statuses = ["todo", "in-progress", "done"];
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "todo":
+        return "#f8d7da"; // Light red
+      case "in-progress":
+        return "#fff3cd"; // Light yellow
+      case "done":
+        return "#d4edda"; // Light green
+      default:
+        return "#ffffff";
+    }
+  };
+
   const handleDragEnd = (result) => {
     const { source, destination, draggableId } = result;
 
@@ -14,11 +27,19 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Container className="mt-5">
-        <Row>
+      <Container fluid className="mt-4 px-3">
+        <Row className="g-3 flex-wrap">
           {statuses.map((status) => (
-            <Col key={status} className="text-center">
-              <h5 className="mb-3">{status.toUpperCase()}</h5>
+            <Col
+              key={status}
+              xs={12}
+              md={6}
+              lg={4}
+              className="d-flex flex-column align-items-center"
+            >
+              <h5 className="mb-3 text-uppercase">
+                {status.replace("-", " ")}
+              </h5>
               <Droppable droppableId={status}>
                 {(provided) => (
                   <div
@@ -26,9 +47,11 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
                     {...provided.droppableProps}
                     style={{
                       minHeight: "200px",
+                      width: "100%",
                       backgroundColor: "#f8f9fa",
                       borderRadius: "8px",
                       padding: "10px",
+                      maxWidth: "420px",
                     }}
                   >
                     {tasks
@@ -48,9 +71,11 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
                                 userSelect: "none",
                                 margin: "0 0 10px 0",
                                 padding: "10px",
-                                background: "#fff",
+                                background: getStatusColor(task.status),
                                 border: "1px solid #dee2e6",
                                 borderRadius: "5px",
+                                wordBreak: "break-word",
+                                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                                 ...provided.draggableProps.style,
                               }}
                             >

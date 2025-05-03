@@ -23,6 +23,12 @@
       "title": "Make the tasks drag and droppable",
       "description": "The tasks should move from one column to another and the data should persist",
       "status": "todo"
+    },
+    {
+      "id": "a650ff86-3157-414e-9252-e8fc5a1bcfbe",
+      "title": "Make the title and status fields required",
+      "description": "",
+      "status": "todo"
     }
   ]
 }
