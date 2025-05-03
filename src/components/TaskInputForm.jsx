@@ -26,7 +26,7 @@ const TaskInputForm = ({ onTaskAdded }) => {
 
     if (!validate()) return;
 
-    fetch("http://localhost:8000/tasks", {
+    fetch("https://kanban-api-s65u.onrender.com/api/v1/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

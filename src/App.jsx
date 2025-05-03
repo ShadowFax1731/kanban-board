@@ -7,7 +7,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = () => {
-    fetch("http://localhost:8000/tasks")
+    fetch("https://kanban-api-s65u.onrender.com/api/v1/tasks")
       .then((res) => res.json())
       .then((data) => setTasks(data))
       .catch((e) => console.log(e));
@@ -27,7 +27,7 @@ function App() {
 
     const updatedTask = { ...task, status: newStatus };
 
-    fetch(`http://localhost:8000/tasks/${taskId}`, {
+    fetch(`https://kanban-api-s65u.onrender.com/api/v1/tasks/${taskId}`, {
       method: "PUT", // or PATCH depending on your backend
       headers: {
         "Content-Type": "application/json",
