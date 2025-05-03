@@ -11,6 +11,7 @@
     "server": "json-server data/tasks.json --port 8000"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "bootstrap": "^5.3.5",
     "json-server": "^1.0.0-beta.3",
     "react": "^19.0.0",

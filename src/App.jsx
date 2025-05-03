@@ -17,9 +17,31 @@ function App() {
     fetchTasks();
   }, []);
 
-  // This gets passed to TaskInputForm
   const handleTaskAdded = () => {
     fetchTasks();
+  };
+
+  const handleStatusChange = (taskId, newStatus) => {
+    const task = tasks.find((t) => t.id === taskId);
+    if (!task) return;
+
+    const updatedTask = { ...task, status: newStatus };
+
+    fetch(`http://localhost:8000/tasks/${taskId}`, {
+      method: "PUT", // or PATCH depending on your backend
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedTask),
+    })
+      .then((res) => {
+        if (res.ok) {
+          setTasks((prev) =>
+            prev.map((t) => (t.id === taskId ? updatedTask : t)),
+          );
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -27,7 +49,7 @@ function App() {
       <div className="form-container">
         <TaskInputForm onTaskAdded={handleTaskAdded} />
       </div>
-      <TaskGrid tasks={tasks} />
+      <TaskGrid tasks={tasks} onStatusChange={handleStatusChange} />
     </>
   );
 }
