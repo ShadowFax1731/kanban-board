@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   const fetchTasks = () => {
     fetch("https://kanban-api-s65u.onrender.com/api/v1/tasks")
@@ -19,6 +20,7 @@ function App() {
 
   const handleTaskAdded = () => {
     fetchTasks();
+    setShowForm(false); // Hide form after adding
   };
 
   const handleStatusChange = (taskId, newStatus) => {
@@ -45,12 +47,25 @@ function App() {
   };
 
   return (
-    <>
-      <div className="form-container">
-        <TaskInputForm onTaskAdded={handleTaskAdded} />
-      </div>
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">Kanban Task Manager</h1>
+
+      {!showForm && (
+        <div className="text-center mb-3">
+          <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Add New Task
+          </button>
+        </div>
+      )}
+
+      {showForm && (
+        <div className="form-container mb-4">
+          <TaskInputForm onTaskAdded={handleTaskAdded} />
+        </div>
+      )}
+
       <TaskGrid tasks={tasks} onStatusChange={handleStatusChange} />
-    </>
+    </div>
   );
 }
 
