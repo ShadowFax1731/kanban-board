@@ -55,4 +55,5 @@ npm run dev
 npm run server
 ```
 
-This sets up a mock API for local development.
+- This sets up a mock API for local development.
+- You would also need to replace the API endpoints in the App.jsx from the hosted API endpoints to localhost endpoints
