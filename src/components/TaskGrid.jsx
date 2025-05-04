@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-const TaskGrid = ({ tasks, onStatusChange }) => {
+const TaskGrid = ({ tasks, onStatusChange, statusChangingTaskId }) => {
   const statuses = ["todo", "in-progress", "done"];
 
   const getStatusColor = (status) => {
@@ -19,9 +19,7 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
 
   const handleDragEnd = (result) => {
     const { source, destination, draggableId } = result;
-
     if (!destination || source.droppableId === destination.droppableId) return;
-
     onStatusChange(draggableId, destination.droppableId);
   };
 
@@ -76,6 +74,9 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
                                 borderRadius: "5px",
                                 wordBreak: "break-word",
                                 boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                                opacity:
+                                  statusChangingTaskId === task.id ? 0.6 : 1,
+                                position: "relative",
                                 ...provided.draggableProps.style,
                               }}
                             >
@@ -83,6 +84,31 @@ const TaskGrid = ({ tasks, onStatusChange }) => {
                               <p className="mb-0 text-muted">
                                 {task.description}
                               </p>
+
+                              {statusChangingTaskId === task.id && (
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    zIndex: 1,
+                                  }}
+                                >
+                                  <div
+                                    className="spinner-border text-primary"
+                                    role="status"
+                                    style={{
+                                      width: "1.5rem",
+                                      height: "1.5rem",
+                                    }}
+                                  >
+                                    <span className="visually-hidden">
+                                      Loading...
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </Draggable>
